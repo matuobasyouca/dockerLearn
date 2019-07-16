@@ -17,6 +17,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR2</spring-cloud.version>
+		<docker.image.prefix>software5000</docker.image.prefix>
+		<docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
 	</properties>
 
 	<dependencies>
@@ -57,9 +59,18 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.3.6</version>
+				<version>1.4.10</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<repository>${project.artifactId}</repository>
+					<repository>${docker.repostory}/${docker.image.prefix}/${project.artifactId}</repository>
 					<buildArgs>
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
